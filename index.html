@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours : Le Marché de l'Emploi - Électricien du Bâtiment</title>
+    <style>
+        /* --- VARIABLES & RESET --- */
+        :root {
+            --primary-color: #0f172a;    /* Bleu nuit très foncé pour le texte principal */
+            --secondary-color: #2563eb;  /* Bleu électrique vif pour les titres/accents */
+            --accent-color: #ea580c;     /* Orange chantier/sécurité pour les points importants */
+            --bg-light: #f8fafc;         /* Fond de page très clair */
+            --bg-white: #ffffff;
+            --text-muted: #475569;
+            --border-radius: 12px;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--primary-color);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            font-size: 18px; /* Taille optimisée pour la projection */
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 5rem 0; /* Sections bien espacées */
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--bg-white);
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        /* Trait décoratif sous les H2 */
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            max-width: 900px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- COMPOSANTS --- */
+        
+        /* Cartes génériques */
+        .card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            height: 100%;
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Encadrés d'information importante */
+        .info-box {
+            background-color: #eff6ff;
+            border-left: 5px solid var(--secondary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .warning-box {
+            background-color: #fff7ed;
+            border-left: 5px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        /* Listes à puces stylisées */
+        .check-list li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .check-list li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        /* Grilles */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        /* Tags / Badges */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-dots {
+            position: fixed;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 14px;
+            height: 14px;
+            background-color: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .nav-dot:hover, .nav-dot.active {
+            background-color: var(--accent-color);
+            transform: scale(1.3);
+        }
+
+        /* Bouton Imprimer */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 200;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-main);
+        }
+
+        .print-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* --- SECTIONS SPECIFIQUES --- */
+
+        /* Hero / Intro */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1e293b 100%);
+            color: white;
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .hero h2 { color: white; }
+        .hero h2::after { background-color: var(--accent-color); }
+        .hero p { color: #cbd5e1; max-width: 100%; }
+
+        .objectifs-block {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-top: 2rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* Liste des métiers */
+        .job-list li {
+            background: white;
+            margin-bottom: 0.8rem;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+        }
+
+        .job-list li::before {
+            content: '⚡';
+            margin-right: 1rem;
+            color: var(--accent-color);
+            font-size: 1.4rem;
+        }
+
+        /* Icones SVG */
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            background-color: #eff6ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        /* --- PODCAST PLAYER (Ajout Pro) --- */
+        .podcast-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .podcast-label {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 600px;
+            height: 40px;
+            outline: none;
+            border-radius: 20px;
+        }
+
+        /* --- PDF DOWNLOAD BUTTON (Ajout Pro) --- */
+        .pdf-container {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .pdf-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-white);
+            color: var(--accent-color);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pdf-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--bg-white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            body { font-size: 16px; } /* Plus lisible sur mobile */
+            .nav-dots { display: none; }
+            .hero { padding: 3rem 0; }
+            .pdf-btn { width: 100%; justify-content: center; }
+        }
+
+        /* --- IMPRESSION --- */
+        @media print {
+            @page { margin: 1.5cm; size: A4; }
+            
+            body { 
+                background: white; 
+                color: black; 
+                font-size: 12pt; 
+                line-height: 1.4;
+            }
+
+            .print-btn, .nav-dots, .podcast-container, .pdf-container { display: none !important; }
+
+            section { 
+                page-break-inside: avoid; 
+                padding: 1rem 0; 
+                border-bottom: none;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero { 
+                background: none !important; 
+                color: black !important; 
+                padding: 0;
+                margin-bottom: 2rem;
+                border-bottom: 2px solid #000;
+            }
+            .hero h1 { color: black; font-size: 24pt; }
+            .hero p { color: #333; }
+            .hero h2 { color: black; border-bottom: 2px solid #ccc; margin-bottom: 1rem;}
+            .hero h2::after { display: none; }
+            
+            .objectifs-block {
+                background: #f9f9f9 !important;
+                border: 1px solid #ccc;
+                color: black;
+                backdrop-filter: none;
+            }
+
+            .card, .info-box, .warning-box {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                padding: 1rem;
+                page-break-inside: avoid;
+                background: white !important;
+            }
+
+            h2 { color: black; font-size: 16pt; border-bottom: 1px solid #ccc; padding-bottom: 0.5rem; margin-top: 1rem;}
+            h2::after { display: none; } /* Masquer la barre orange à l'impression */
+            h3 { color: #444; font-size: 14pt; margin-top: 1rem; }
+
+            .job-list li { border: 1px solid #ddd; padding: 0.5rem; box-shadow: none; }
+            .job-list li::before { color: black; } /* Simplifier l'icône */
+
+            .tag { 
+                border: 1px solid #000; 
+                color: #000; 
+                background: none; 
+                padding: 0.2rem 0.5rem;
+                border-radius: 4px;
+                font-weight: normal;
+                font-size: 0.9rem;
+            }
+
+            .icon-box { display: none; } /* Économie d'encre */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bouton Imprimir -->
+    <button class="print-btn" onclick="window.print()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        Imprimer / PDF
+    </button>
+
+    <!-- Navigation -->
+    <nav class="nav-dots">
+        <a href="#intro" class="nav-dot active" title="Introduction"></a>
+        <a href="#secteur" class="nav-dot" title="Le Secteur"></a>
+        <a href="#debouches" class="nav-dot" title="Débouchés"></a>
+        <a href="#employeurs" class="nav-dot" title="Employeurs"></a>
+        <a href="#attentes" class="nav-dot" title="Attentes"></a>
+        <a href="#competences" class="nav-dot" title="Compétences"></a>
+        <a href="#criteres" class="nav-dot" title="Critères"></a>
+        <a href="#strategie" class="nav-dot" title="Stratégie"></a>
+    </nav>
+
+    <!-- HEADER : INTRODUCTION & OBJECTIFS -->
+    <header id="intro" class="section hero">
+        <div class="container">
+            <h1>Comprendre le marché de l'emploi<br>Électricien du Bâtiment</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Titre Professionnel : Électricien d'équipement du bâtiment</p>
+            
+            <div class="objectifs-block">
+                <h2>Objectifs de la formation</h2>
+                <div class="grid-2">
+                    <div>
+                        <h3>Objectif Général</h3>
+                        <p>Comprendre le fonctionnement du marché de l’emploi dans l’électricité du bâtiment afin de mieux cibler vos candidatures, adapter votre discours et choisir les entreprises les plus pertinentes selon votre profil.</p>
+                    </div>
+                    <div>
+                        <h3>Objectifs Opérationnels</h3>
+                        <ul class="check-list">
+                            <li>Identifier les principaux débouchés après le TP.</li>
+                            <li>Repérer les employeurs potentiels selon leur taille.</li>
+                            <li>Comprendre les attentes prioritaires des recruteurs.</li>
+                            <li>Distinguer compétences techniques et comportementales.</li>
+                            <li>Construire une stratégie de recherche d’emploi réaliste.</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; font-style: italic; opacity: 0.8; margin-bottom: 0;">Durée conseillée : 2h à 2h30</p>
+            </div>
+
+            <!-- PODCAST PLAYER -->
+            <div class="podcast-container">
+                <div class="podcast-label">🎧 Podcast : Comprendre le marché de l’emploi</div>
+                <!-- L'attribut autoplay tente de lancer le son automatiquement. -->
+                <!-- L'attribut controls ajoute les boutons Play/Pause/Stop natifs. -->
+                <audio controls autoplay>
+                    <!-- IMPORTANT : Le fichier audio doit se nommer "Comprendre le marché de l’emploi.mp3" -->
+                    <source src="Comprendre le marché de l’emploi.mp3" type="audio/mpeg">
+                    Votre navigateur ne supporte pas l'élément audio.
+                </audio>
+            </div>
+
+            <!-- PDF DOWNLOAD BUTTON -->
+            <div class="pdf-container">
+                <!-- IMPORTANT : Le fichier PDF doit se nommer "Stratégie Emploi Électricien.pdf" -->
+                <a href="Stratégie Emploi Électricien.pdf" class="pdf-btn" download>
+                    ⬇️ Télécharger le PDF : Stratégie Emploi Électricien
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- SECTION 1 : LE SECTEUR -->
+    <section id="secteur">
+        <div class="container">
+            <h2>1. Le secteur et ses besoins</h2>
+            
+            <div class="grid-2">
+                <div>
+                    <p>Le bâtiment continue de recruter massivement car il répond à des besoins durables :</p>
+                    <ul class="check-list">
+                        <li><strong>Construction neuve</strong> (logements, tertiaire).</li>
+                        <li><strong>Rénovation</strong> et mise aux normes.</li>
+                        <li><strong>Modernisation</strong> des bâtiments.</li>
+                        <li>Développement des équipements liés à l’<strong>énergie</strong> et aux réseaux de communication.</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="info-box">
+                        <h3>Votre domaine d'intervention</h3>
+                        <p style="margin-bottom:0">Le métier d’électricien du bâtiment intervient dans des contextes variés, ce qui élargit les opportunités d’embauche. Le TP prépare à :</p>
+                        <ul class="check-list">
+                            <li>Installer les réseaux d'énergie (courants forts).</li>
+                            <li>Installer les réseaux de communication (courants faibles).</li>
+                            <li>Mettre en place des solutions d’efficacité énergétique.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h3>Le marché est favorable, mais exigeant</h3>
+                <p style="margin-bottom:0">Si le diplôme facilite l’entrée dans le métier, les employeurs exigent de la <strong>fiabilité</strong>, de la <strong>rigueur</strong>, le <strong>respect des consignes</strong> et une capacité à travailler en sécurité. Le candidat qui sait se montrer sérieux et adaptable sera souvent plus attractif qu’un profil uniquement technique.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2 : DÉBOUCHÉS -->
+    <section id="debouches" style="background-color: #fff;">
+        <div class="container">
+            <h2>2. Les débouchés après le TP</h2>
+            <p>Plusieurs intitulés de postes peuvent correspondre au même socle de compétences. Le métier couvre les bâtiments d’habitation, le tertiaire, l’artisanat et certains sites industriels.</p>
+
+            <div class="tag-container">
+                <span class="tag">Électricien</span>
+                <span class="tag">Électricien bâtiment</span>
+                <span class="tag">Monteur électricien</span>
+                <span class="tag">Installateur électricien</span>
+                <span class="tag">Tableautiste en électricité</span>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <div class="card">
+                    <h3>Vos missions futures</h3>
+                    <div class="grid-2">
+                        <ul class="check-list">
+                            <li>Réalisation d’installations neuves.</li>
+                            <li>Mise en sécurité de logements existants.</li>
+                            <li>Vérification des installations.</li>
+                            <li>Dépannage.</li>
+                        </ul>
+                        <ul class="check-list">
+                            <li>Installation d’équipements de sûreté.</li>
+                            <li>Automatisme.</li>
+                            <li>Efficacité énergétique.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 : EMPLOYEURS -->
+    <section id="employeurs">
+        <div class="container">
+            <h2>3. Les employeurs à cibler</h2>
+            <p>Tous les employeurs ne cherchent pas le même profil. Le bon choix dépend de votre niveau d’autonomie, de votre mobilité et de votre projet professionnel.</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon-box">🏗️</div>
+                    <h4>Artisanat & PME</h4>
+                    <p style="font-size:0.9rem">Entreprises artisanales, spécialisées en installation ou rénovation.</p>
+                    <p style="font-size:0.9rem; color: var(--accent-color); font-weight:bold; margin-top:1rem;">Avantages :</p>
+                    <ul class="check-list" style="font-size:0.9rem">
+                        <li>Plus accessibles pour débuter.</li>
+                        <li>Polyvalence rapide.</li>
+                        <li>Apprentissage de plusieurs tâches.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="icon-box">🏢</div>
+                    <h4>Grandes Entreprises</h4>
+                    <p style="font-size:0.9rem">Entreprises générales d'électricité, gros chantiers.</p>
+                    <p style="font-size:0.9rem; color: var(--accent-color); font-weight:bold; margin-top:1rem;">Avantages :</p>
+                    <ul class="check-list" style="font-size:0.9rem">
+                        <li>Procédures structurées.</li>
+                        <li>Technicité élevée.</li>
+                        <li>Possibilités d'évolution.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <div class="icon-box">🔧</div>
+                    <h4>Maintenance & Services</h4>
+                    <p style="font-size:0.9rem">Sociétés de maintenance, services techniques (hôpitaux, écoles, collectivités).</p>
+                    <p style="font-size:0.9rem; color: var(--accent-color); font-weight:bold; margin-top:1rem;">Avantages :</p>
+                    <ul class="check-list" style="font-size:0.9rem">
+                        <li>Régularité des horaires.</li>
+                        <li>Déplacements variés.</li>
+                        <li>Relationnel client.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="info-box" style="margin-top: 2rem;">
+                <strong>À ne pas oublier :</strong> Les agences d’intérim sont également un passage fréquent pour entrer dans le secteur et faire ses preuves.
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 : ATTENTES -->
+    <section id="attentes" style="background-color: #fff;">
+        <div class="container">
+            <h2>4. Les attentes des recruteurs</h2>
+            <p>Dans ce métier, les recruteurs recherchent d’abord des profils capables de travailler proprement, en sécurité et dans le respect des délais. Les qualités humaines comptent autant que la technique.</p>
+
+            <div class="grid-2">
+                <div class="card" style="border-top: 4px solid var(--accent-color);">
+                    <h3>Les priorités absolues</h3>
+                    <ul class="check-list">
+                        <li><strong>Respect des règles de sécurité</strong> (individuelle et collective).</li>
+                        <li><strong>Rigueur et méthode.</strong></li>
+                        <li><strong>Ponctualité.</strong></li>
+                        <li><strong>Capacité à suivre les consignes.</strong></li>
+                    </ul>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--secondary-color);">
+                    <h3>Savoir-être au travail</h3>
+                    <ul class="check-list">
+                        <li>Goût du travail en équipe.</li>
+                        <li>Mobilité selon les chantiers.</li>
+                        <li>Bon relationnel avec les collègues et les clients.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <p style="margin-bottom:0"><strong>Note :</strong> L'entreprise cherche quelqu'un qui limite les risques et s’intègre rapidement. La sécurité est une dimension centrale du métier (Code du travail, habilitations).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5 : COMPÉTENCES -->
+    <section id="competences">
+        <div class="container">
+            <h2>5. Les compétences qui font la différence</h2>
+            <p>Le marché valorise fortement les candidats capables de passer du geste technique à la compréhension globale du chantier. Plus le profil est polyvalent, plus il a de chances de décrocher des opportunités.</p>
+
+            <div class="grid-2">
+                <div>
+                    <h3 style="border-left: 4px solid var(--primary-color); padding-left: 1rem;">Compétences Techniques</h3>
+                    <div class="card" style="background-color: var(--primary-color); color: white; border:none;">
+                        <ul class="check-list" style="color:white;">
+                            <li style="color:white;">Réaliser l’installation des réseaux d’énergie (courants forts).</li>
+                            <li style="color:white;">Vérifier et mettre en service l’installation.</li>
+                            <li style="color:white;">Mettre en sécurité les installations existantes.</li>
+                            <li style="color:white;">Installer les réseaux de communication.</li>
+                            <li style="color:white;">Installer des équipements de sûreté et d’automatisme.</li>
+                            <li style="color:white;">Installer des solutions d’efficacité énergétique.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="border-left: 4px solid var(--accent-color); padding-left: 1rem;">Compétences Transversales</h3>
+                    <div class="card">
+                        <ul class="check-list">
+                            <li>Lire un plan ou un schéma.</li>
+                            <li>Préparer son matériel avant l’intervention.</li>
+                            <li>Travailler de manière ordonnée.</li>
+                            <li>Vérifier le résultat de son travail.</li>
+                            <li>Communiquer avec l’équipe.</li>
+                            <li>S’adapter aux contraintes de chantier.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6 : CRITÈRES -->
+    <section id="criteres" style="background-color: #fff;">
+        <div class="container">
+            <h2>6. Les critères de sélection</h2>
+            <p>Pour mieux vous positionner, voici les éléments souvent décisifs pour un recruteur. Si votre expérience est faible, compensez par la motivation et la fiabilité.</p>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-top: 2rem;">
+                
+                <div class="card" style="flex: 1; min-width: 200px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🪪</div>
+                    <h4>Habilitations</h4>
+                    <p style="font-size: 0.9rem; text-align: center; margin-bottom:0;">Notamment celles demandées par le poste (BR, B1V...).</p>
+                </div>
+
+                <div class="card" style="flex: 1; min-width: 200px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🚗</div>
+                    <h4>Permis B</h4>
+                    <p style="font-size: 0.9rem; text-align: center; margin-bottom:0;">Très utile, souvent indispensable pour les déplacements.</p>
+                </div>
+
+                <div class="card" style="flex: 1; min-width: 200px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">⏱️</div>
+                    <h4>Disponibilité</h4>
+                    <p style="font-size: 0.9rem; text-align: center; margin-bottom:0;">Capacité à apprendre vite et à être présent.</p>
+                </div>
+
+                <div class="card" style="flex: 1; min-width: 200px; text-align: center;">
+                    <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🗺️</div>
+                    <h4>Mobilité</h4>
+                    <p style="font-size: 0.9rem; text-align: center; margin-bottom:0;">Géographique selon la zone des chantiers.</p>
+                </div>
+            </div>
+            
+            <div class="info-box" style="text-align: center; margin-top: 2rem;">
+                <strong>Votre dossier ou entretien doit rassurer</strong> sur votre capacité à vous adapter aux réalités du chantier.
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7 : STRATÉGIE -->
+    <section id="strategie">
+        <div class="container">
+            <h2>7. Construire sa stratégie de recherche</h2>
+            <p>Le marché de l’emploi ne se cherche pas au hasard. Un candidat bien organisé donne une meilleure image de professionnalisme. Suivez ces étapes :</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon-box">1</div>
+                    <h4>Cibler</h4>
+                    <p>Identifiez les types d’entreprises qui vous correspondent (PME, grands groupes, maintenance) et choisissez une zone géographique réaliste.</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon-box">2</div>
+                    <h4>Adapter</h4>
+                    <p>Repérez les offres correspondant à votre niveau. Adaptez votre CV et votre lettre à chaque entreprise ciblée (ne pas envoyer le même CV partout).</p>
+                </div>
+
+                <div class="card">
+                    <div class="icon-box">3</div>
+                    <h4>Suivre & Relancer</h4>
+                    <p>Suivez vos candidatures dans un tableau de bord. Relancez proprement et au bon moment pour montrer votre motivation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="background-color: var(--primary-color); color: white; padding: 4rem 0; text-align: center;">
+        <div class="container">
+            <h2 style="color: white; border:none;">En résumé</h2>
+            <p style="color: #cbd5e1; max-width: 800px; margin: 0 auto 2rem auto;">
+                Le marché de l'électricien est porteur. Pour réussir votre insertion : soyez fiable, valorisez votre sécurité et adaptez votre recherche aux entreprises correspondant à votre profil.
+            </p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0;">Support de formation - Module Recherche d'Emploi</p>
+        </div>
+    </footer>
+
+    <!-- Script pour la navigation active -->
+    <script>
+        const sections = document.querySelectorAll('section, header, footer');
+        const navDots = document.querySelectorAll('.nav-dot');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                // Ajustement pour activer la section un peu avant qu'elle n'atteigne le haut
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navDots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('href').includes(current)) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
